@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRMotero - Ficha de Emergencia</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: #121212; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .card { background: #1e1e1e; border-radius: 16px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center; }
+        .badge-danger { background: #e53e3e; color: white; padding: 8px 16px; border-radius: 50px; font-weight: bold; display: inline-block; margin-bottom: 16px; font-size: 0.9rem; letter-spacing: 1px; }
+        .blood-type { font-size: 4rem; font-weight: 900; color: #e53e3e; margin: 10px 0; }
+        .info-group { text-align: left; background: #2a2a2a; padding: 12px 16px; border-radius: 8px; margin-bottom: 12px; }
+        .info-label { font-size: 0.75rem; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-value { font-size: 1.1rem; font-weight: 600; color: #ffffff; margin-top: 2px; }
+        .btn-call { display: block; width: 100%; background: #38a169; color: white; text-decoration: none; padding: 16px; border-radius: 12px; font-weight: bold; font-size: 1.2rem; margin-top: 20px; text-align: center; box-shadow: 0 4px 12px rgba(56,161,105,0.4); }
+        .btn-search { width: 100%; background: #3182ce; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 1rem; margin-top: 10px; cursor: pointer; }
+        input[type="text"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #4a5568; background: #2d3748; color: white; font-size: 1rem; text-align: center; margin-top: 10px; }
+        .hidden { display: none; }
+        .loader { border: 4px solid #2d3748; border-top: 4px solid #e53e3e; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .footer-link { margin-top: 20px; font-size: 0.8rem; color: #718096; }
+        .footer-link a { color: #cbd5e0; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <!-- PANTALLA DE CARGA -->
+    <div id="loading" class="card">
+        <div class="loader"></div>
+        <p>Consultando Ficha Médica...</p>
+    </div>
+
+    <!-- BUSCADOR MANUAL DE RESPALDO -->
+    <div id="search-container" class="card hidden">
+        <h2>QRMotero</h2>
+        <p style="color: #a0aec0; font-size: 0.9rem; margin-top: 8px;">Ingrese el código único impreso en el casco</p>
+        <input type="text" id="manual-tag" placeholder="Ejemplo: VE-1001" style="text-transform: uppercase;">
+        <button class="btn-search" onclick="buscarManual()">CONSULTAR FICHA</button>
+    </div>
+
+    <!-- FICHA MÉDICA DE EMERGENCIA -->
+    <div id="emergency-card" class="card hidden">
+        <span class="badge-danger">EMERGENCIA MÉDICA</span>
+        <h1 id="motero-name" style="font-size: 1.5rem;">---</h1>
+        <p id="motero-dni" style="color: #a0aec0; font-size: 0.9rem;">C.I. ---</p>
+        
+        <div class="blood-type" id="motero-blood">--</div>
+
+        <div class="info-group">
+            <div class="info-label">Alergias Conocidas</div>
+            <div class="info-value" id="motero-allergies">---</div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Condiciones / Enfermedades</div>
+            <div class="info-value" id="motero-conditions">---</div>
+        </div>
+
+        <div class="info-group">
+            <div class="info-label">Placa de Vehículo</div>
+            <div class="info-value" id="motero-plate">---</div>
+        </div>
+
+        <a id="btn-call-contact" href="#" class="btn-call">📞 LLAMAR CONTACTO</a>
+
+        <div class="footer-link">
+            ¿Sus datos cambiaron? <a id="link-support" href="https://wa.me/584120000000?text=Hola,%20quiero%20actualizar%20mis%20datos" target="_blank">Solicitar actualización</a>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN DE APIS (Ajusta con tus datos)
+        const AIRTABLE_PAT = 'patAKqaGwtvlsa22Q.0c45608d011d9019120cf6085b1321ea9c54372e3d0b6b5f6755ff7a87f823b3
+'; 
+        const AIRTABLE_BASE_ID = 'appzHgBdVzIsjLyGP'; 
+        const TALLY_FORM_URL = 'patAKqaGwtvlsa22Q.0c45608d011d9019120cf6085b1321ea9c54372e3d0b6b5f6755ff7a87f823b3
+'; 
+
+        // Detectar si la URL trae un parametro ?tag=VE-XXXX
+        const urlParams = new URLSearchParams(window.location.search);
+        const tagId = urlParams.get('tag');
+
+        if (tagId) {
+            consultarAirtable(tagId.trim().toUpperCase());
+        } else {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('search-container').classList.remove('hidden');
+        }
+
+        function buscarManual() {
+            const inputVal = document.getElementById('manual-tag').value.trim().toUpperCase();
+            if (inputVal) {
+                document.getElementById('search-container').classList.add('hidden');
+                document.getElementById('loading').classList.remove('hidden');
+                consultarAirtable(inputVal);
+            }
+        }
+
+        async function consultarAirtable(tag) {
+            const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Moteros?filterByFormula=%7Btag_id%7D%3D'${encodeURIComponent(tag)}'`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: { Authorization: `Bearer ${AIRTABLE_PAT}` }
+                });
+                const data = await response.json();
+
+                if (data.records && data.records.length > 0) {
+                    const record = data.records[0].fields;
+
+                    // Si el registro existe y está activo -> Mostrar Ficha Médica
+                    if (record.is_active === true) {
+                        mostrarFicha(record, tag);
+                    } else {
+                        // Si el registro es virgen (is_active es false) -> Redirigir a Tally
+                        window.location.href = `${TALLY_FORM_URL}?tag=${tag}`;
+                    }
+                } else {
+                    alert('Código de sticker no encontrado.');
+                    location.reload();
+                }
+            } catch (error) {
+                console.error('Error al consultar datos:', error);
+                alert('Ocurrió un error al cargar la información.');
+            }
+        }
+
+        function mostrarFicha(fields, tag) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('emergency-card').classList.remove('hidden');
+
+            document.getElementById('motero-name').textContent = fields.full_name || 'No registrado';
+            document.getElementById('motero-dni').textContent = `C.I. ${fields.dni || 'S/I'}`;
+            document.getElementById('motero-blood').textContent = fields.blood_type || '--';
+            document.getElementById('motero-allergies').textContent = fields.allergies || 'Ninguna';
+            document.getElementById('motero-conditions').textContent = fields.conditions || 'Ninguna';
+            document.getElementById('motero-plate').textContent = fields.plate || 'S/I';
+
+            const phone = fields.emergency_contact_phone || '';
+            const contactName = fields.emergency_contact_name || 'Familiar';
+            const btnCall = document.getElementById('btn-call-contact');
+            
+            btnCall.href = `tel:${phone}`;
+            btnCall.textContent = `📞 LLAMAR A ${contactName.toUpperCase()}`;
+
+            // Personalizar enlace de WhatsApp para soporte
+            const supportLink = document.getElementById('link-support');
+            supportLink.href = `https://wa.me/584120000000?text=Hola,%20necesito%20actualizar%20los%20datos%20de%20mi%20sticker%20${tag}`;
+        }
+    </script>
+</body>
+</html>
