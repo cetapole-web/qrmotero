@@ -114,8 +114,8 @@
                         window.location.href = `${TALLY_FORM_URL}?tag=${tag}`;
                     }
                 } else {
-                    alert('window.location.href = `${TALLY_FORM_URL}?tag=${tag}`;');
-                    location.reload();
+                    window.location.href = `${TALLY_FORM_URL}?tag=${tag}`;
+                    
                 }
             } catch (error) {
                 console.error('Error al consultar datos:', error);
