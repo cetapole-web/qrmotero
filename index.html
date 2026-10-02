@@ -138,7 +138,7 @@
             document.getElementById('motero-allergies').textContent = fields.allergies || 'Ninguna';
             document.getElementById('motero-conditions').textContent = fields.conditions || 'Ninguna';
             document.getElementById('motero-plate').textContent = fields.plate || 'S/I';
-
+            document.getElementById('motero-address').textContent = fields.direccion || 'No registrada';
             const phone = fields.emergency_contact_phone || '';
             const contactName = fields.emergency_contact_name || 'Familiar';
             const btnCall = document.getElementById('btn-call-contact');
