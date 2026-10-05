@@ -15,8 +15,9 @@
         .info-value { font-size: 1.1rem; font-weight: 600; color: #ffffff; margin-top: 2px; }
         .btn-call { display: block; width: 100%; background: #38a169; color: white; text-decoration: none; padding: 16px; border-radius: 10px; font-weight: bold; font-size: 1.2rem; margin-top: 20px; text-align: center; box-shadow: 0 4px 12px rgba(56,161,105,0.4); }
         .btn-search { width: 100%; background: #3182ce; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 1rem; margin-top: 10px; cursor: pointer; }
+        .btn-restricted { display: block; width: 100%; background: #d69e2e; color: #1a202c; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 1rem; margin: 16px 0; cursor: pointer; box-shadow: 0 4px 12px rgba(214,158,46,0.3); }
         input[type="text"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #4a5568; background: #2d3748; color: white; font-size: 1rem; text-align: center; margin-top: 10px; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .loader { border: 4px solid #2d3748; border-top: 4px solid #e53e3e; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .footer-link { margin-top: 20px; font-size: 0.8rem; color: #718096; }
@@ -42,15 +43,11 @@
     <!-- FICHA MÉDICA DE EMERGENCIA -->
     <div id="emergency-card" class="card hidden">
         <span class="badge-danger">EMERGENCIA MÉDICA</span>
+        
+        <!-- DATOS PÚBLICOS VISIBLES -->
         <h1 id="motero-name" style="font-size: 1.5rem;">---</h1>
-        <p id="motero-dni" style="color: #00C187; font-size: 0.9rem;">C.I. ---</p>
 
         <div class="blood-type" id="motero-blood">--</div>
-
-        <div class="info-group">
-            <div class="info-label">Apellidos</div>
-            <div class="info-value" id="motero-lastname">---</div>
-        </div>
 
         <div class="info-group">
             <div class="info-label">Alergias Conocidas</div>
@@ -63,98 +60,111 @@
         </div>
 
         <div class="info-group">
-            <div class="info-label">Contacto de Emergencia</div>
-            <div class="info-value" id="motero-emergency-name">---</div>
-        </div>
-
-        <div class="info-group">
-            <div class="info-label">Teléfono Emergencia</div>
-            <div class="info-value" id="motero-emergency-phone">---</div>
-        </div>
-
-        <div class="info-group">
             <div class="info-label">Placa del Vehículo</div>
             <div class="info-value" id="motero-plate">---</div>
         </div>
 
-        <div class="info-group">
-            <div class="info-label">Dirección de Habitación</div>
-            <div class="info-value" id="motero-address">---</div>
-        </div>
+        <!-- BOTÓN DE DESBLOQUEO DE CÓDIGO RESTRINGIDO -->
+        <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()">🔒 CÓDIGO RESTRINGIDO</button>
 
-        <div class="info-group">
-            <div class="info-label">Peso</div>
-            <div class="info-value" id="motero-weight">---</div>
-        </div>
+        <!-- SECCIÓN DE CAMPOS RESTRINGIDOS (OCULTOS POR DEFECTO) -->
+        <div id="restricted-section" class="hidden">
+            <p id="motero-dni" style="color: #00C187; font-size: 0.9rem; margin-bottom: 12px;">C.I. ---</p>
 
-        <div class="info-group">
-            <div class="info-label">Edad</div>
-            <div class="info-value" id="motero-age">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Apellidos</div>
+                <div class="info-value" id="motero-lastname">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Fecha de Nacimiento</div>
-            <div class="info-value" id="motero-birthdate">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Contacto de Emergencia</div>
+                <div class="info-value" id="motero-emergency-name">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Teléfono Propietario</div>
-            <div class="info-value" id="motero-phone">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Teléfono Emergencia</div>
+                <div class="info-value" id="motero-emergency-phone">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Número Registro INTT</div>
-            <div class="info-value" id="motero-reg-intt">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Dirección de Habitación</div>
+                <div class="info-value" id="motero-address">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Vencimiento Certificado Médico</div>
-            <div class="info-value" id="motero-ven-cermedic">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Peso</div>
+                <div class="info-value" id="motero-weight">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Vencimiento Seguro Vehículo</div>
-            <div class="info-value" id="motero-ven-seg">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Edad</div>
+                <div class="info-value" id="motero-age">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Vencimiento Licencia</div>
-            <div class="info-value" id="motero-ven-licen">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Fecha de Nacimiento</div>
+                <div class="info-value" id="motero-birthdate">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Licencia de Conducir Tipo</div>
-            <div class="info-value" id="motero-tipo-lic">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Teléfono Propietario</div>
+                <div class="info-value" id="motero-phone">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Serial Carrocería</div>
-            <div class="info-value" id="motero-ser-carroc">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Número Registro INTT</div>
+                <div class="info-value" id="motero-reg-intt">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Año del Vehículo</div>
-            <div class="info-value" id="motero-veh-year">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Vencimiento Certificado Médico</div>
+                <div class="info-value" id="motero-ven-cermedic">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Modelo del Vehículo</div>
-            <div class="info-value" id="motero-mod-vehi">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Vencimiento Seguro Vehículo</div>
+                <div class="info-value" id="motero-ven-seg">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Marca del Vehículo</div>
-            <div class="info-value" id="motero-marc-vehi">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Vencimiento Licencia</div>
+                <div class="info-value" id="motero-ven-licen">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Vehículo Tipo</div>
-            <div class="info-value" id="motero-tipo-vehi">---</div>
-        </div>
+            <div class="info-group">
+                <div class="info-label">Licencia de Conducir Tipo</div>
+                <div class="info-value" id="motero-tipo-lic">---</div>
+            </div>
 
-        <div class="info-group">
-            <div class="info-label">Trabaja en</div>
-            <div class="info-value" id="motero-trab-en">---</div>
+            <div class="info-group">
+                <div class="info-label">Serial Carrocería</div>
+                <div class="info-value" id="motero-ser-carroc">---</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Año del Vehículo</div>
+                <div class="info-value" id="motero-veh-year">---</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Modelo del Vehículo</div>
+                <div class="info-value" id="motero-mod-vehi">---</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Marca del Vehículo</div>
+                <div class="info-value" id="motero-marc-vehi">---</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Vehículo Tipo</div>
+                <div class="info-value" id="motero-tipo-vehi">---</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Trabaja en</div>
+                <div class="info-value" id="motero-trab-en">---</div>
+            </div>
         </div>
 
         <a id="btn-call-contact" href="#" class="btn-call">📞 LLAMAR CONTACTO</a>
@@ -168,6 +178,7 @@
         const AIRTABLE_PAT = 'patAKqaGwtvlsa22Q.0c45608d011d9019120cf6085b1321ea9c54372e3d0b6b5f6755ff7a87f823b3'; 
         const AIRTABLE_BASE_ID = 'appzHgBdVzIsjLyGP'; 
         const TALLY_FORM_URL = 'https://tally.so/r/44eqob';
+        const ACCESS_CODE = '282828';
 
         const urlParams = new URLSearchParams(window.location.search);
         const tagId = urlParams.get('tag');
@@ -221,44 +232,40 @@
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('emergency-card').classList.remove('hidden');
 
-            // 1. Nombre completo y DNI
+            // --- CAMPOS PÚBLICOS VISIBLES ---
             document.getElementById('motero-name').textContent = fields.ful_name || fields.full_name || 'No registrado';
-            document.getElementById('motero-lastname').textContent = fields['full_name 2'] || fields.full_name_2 || 'No registrado';
-            document.getElementById('motero-dni').textContent = `C.I. ${fields.dni || 'S/I'}`;
-            
-            // 2. Información Médica
             document.getElementById('motero-blood').textContent = fields.blood_type || '--';
             document.getElementById('motero-allergies').textContent = fields.allergies || 'Ninguna';
             document.getElementById('motero-conditions').textContent = fields.conditions || 'Ninguna';
+            document.getElementById('motero-plate').textContent = fields.plate || 'S/I';
+
+            // --- CAMPOS RESTRINGIDOS ---
+            document.getElementById('motero-lastname').textContent = fields['full_name 2'] || fields.full_name_2 || 'No registrado';
+            document.getElementById('motero-dni').textContent = `C.I. ${fields.dni || 'S/I'}`;
             
-            // 3. Contacto Emergencia
             const emergencyName = fields.emergency_contact_name || 'Familiar';
             const emergencyPhone = fields.emergency_contact_phone || '';
             document.getElementById('motero-emergency-name').textContent = emergencyName;
             document.getElementById('motero-emergency-phone').textContent = emergencyPhone || 'S/I';
 
-            // 4. Datos del Propietario / Vehículo
-            document.getElementById('motero-plate').textContent = fields.plate || 'S/I';
             document.getElementById('motero-address').textContent = fields.direccion || 'No registrada';
             document.getElementById('motero-weight').textContent = fields.peso || '---';
             document.getElementById('motero-age').textContent = fields.edad || '---';
             document.getElementById('motero-birthdate').textContent = fields.fecha_nac || '---';
             document.getElementById('motero-phone').textContent = fields.número_prop || fields.numero_prop || fields.num_telef || '---';
             
-            // 5. Documentos y Legal
             document.getElementById('motero-reg-intt').textContent = fields.reg_intt || '---';
             document.getElementById('motero-ven-cermedic').textContent = fields.ven_cermedic || '---';
             document.getElementById('motero-ven-seg').textContent = fields.ven_seg || '---';
             document.getElementById('motero-ven-licen').textContent = fields.ven_licen || '---';
             document.getElementById('motero-tipo-lic').textContent = fields.tipo_lic || '---';
             
-            // 6. Datos Técnicos del Vehículo / Trabajo
             document.getElementById('motero-ser-carroc').textContent = fields.ser_carroc || '---';
             document.getElementById('motero-veh-year').textContent = fields['año_vehi'] || fields.ano_vehi || '---';
             document.getElementById('motero-mod-vehi').textContent = fields.mod_vehi || '---';
             document.getElementById('motero-marc-vehi').textContent = fields.marc_vehi || '---';
             document.getElementById('motero-tipo-vehi').textContent = fields.tipo_vehi || '---';
-            document.getElementById('motero-trab-en').textContent = fields.trab_en || '---';
+            document.getElementById('motero-trab-en').textContent = fields.trab_en || fields['Trabaja en'] || fields.trabaja_en || fields.trab_on || '---';
 
             // Botón de llamada al contacto de emergencia
             const btnCall = document.getElementById('btn-call-contact');
@@ -272,6 +279,17 @@
             // Soporte WhatsApp
             const supportLink = document.getElementById('link-support');
             supportLink.href = `https://wa.me/584120000000?text=Hola,%20necesito%20actualizar%20los%20datos%20de%20mi%20sticker%20${tag}`;
+        }
+
+        // FUNCIÓN PARA VALIDAR EL CÓDIGO Y DESBLOQUEAR
+        function desbloquearCampos() {
+            const inputCode = prompt("Ingrese el código de acceso autorizado:");
+            if (inputCode === ACCESS_CODE) {
+                document.getElementById('restricted-section').classList.remove('hidden');
+                document.getElementById('btn-unlock').classList.add('hidden');
+            } else if (inputCode !== null) {
+                alert("Código incorrecto. Acceso denegado.");
+            }
         }
     </script>
 </body>
