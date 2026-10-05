@@ -8,7 +8,6 @@
         :root {
             --bg-color: #f2f5f8;
             --primary-color: #1abc9c;
-            --primary-dark: #16a085;
             --card-bg: #ffffff;
             --text-main: #2c3e50;
             --text-sub: #7f8c8d;
@@ -39,48 +38,22 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            margin-bottom: 20px;
         }
 
-        /* HEADER & TABS */
+        /* HEADER */
         .app-header {
             background: var(--primary-color);
             color: white;
-            padding: 20px 20px 10px 20px;
+            padding: 20px;
             text-align: center;
         }
 
         .app-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 4px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            background: transparent;
-            color: white;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn.active {
-            background: white;
-            color: var(--primary-color);
         }
 
         /* BODY CONTENT */
@@ -104,7 +77,7 @@
         .info-card { 
             background: var(--card-bg); 
             border-radius: 14px; 
-            padding: 14px 16px; 
+            padding: 12px 16px; 
             margin-bottom: 10px; 
             box-shadow: 0 2px 6px rgba(0,0,0,0.04);
             display: flex;
@@ -113,21 +86,21 @@
         }
 
         .card-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             background: #eef9f8;
             color: var(--primary-color);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
         }
 
         .card-details { flex: 1; text-align: left; }
-        .info-label { font-size: 0.75rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; }
-        .info-value { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-top: 2px; }
+        .info-label { font-size: 0.72rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; }
+        .info-value { font-size: 0.98rem; font-weight: 700; color: var(--text-main); margin-top: 2px; }
 
         .blood-card {
             background: #fdf2f2;
@@ -137,7 +110,17 @@
             background: var(--danger-color);
             color: white;
             font-weight: 900;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            margin: 16px 0 8px 4px;
+            text-align: left;
+            letter-spacing: 0.5px;
         }
 
         /* BUTTONS */
@@ -150,7 +133,7 @@
             border-radius: 12px; 
             font-weight: bold; 
             font-size: 0.95rem; 
-            margin: 12px 0; 
+            margin: 16px 0; 
             cursor: pointer; 
             box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
         }
@@ -230,20 +213,16 @@
 <body>
 
     <div class="app-container">
-        <!-- CABECERA DE LA APLICACIÓN -->
+        <!-- CABECERA -->
         <div class="app-header">
             <div class="app-title">QRMotero</div>
-            <div class="nav-tabs">
-                <button class="tab-btn active">Emergencia</button>
-                <button class="tab-btn" onclick="desbloquearCampos()">Restringido 🔒</button>
-            </div>
         </div>
 
         <div class="app-content">
             <!-- PANTALLA DE CARGA -->
             <div id="loading">
                 <div class="loader"></div>
-                <p style="text-align: center; color: var(--text-sub);">Cargando ficha...</p>
+                <p style="text-align: center; color: var(--text-sub);">Consultando Ficha...</p>
             </div>
 
             <!-- BUSCADOR MANUAL -->
@@ -259,11 +238,11 @@
                     <span class="badge-danger">EMERGENCIA MÉDICA</span>
                 </div>
 
-                <!-- DATOS PÚBLICOS -->
+                <!-- 1. CAMPOS PÚBLICOS SOLICITADOS -->
                 <div class="info-card">
                     <div class="card-icon">👤</div>
                     <div class="card-details">
-                        <div class="info-label">Nombre y Apellido</div>
+                        <div class="info-label">Nombre</div>
                         <div class="info-value" id="motero-name">---</div>
                     </div>
                 </div>
@@ -300,11 +279,21 @@
                     </div>
                 </div>
 
-                <!-- BOTÓN RESTRINGIDO -->
-                <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()">🔒 VER DATOS RESTRINGIDOS</button>
+                <!-- BOTÓN DE CÓDIGO RESTRINGIDO -->
+                <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()">🔒 CÓDIGO RESTRINGIDO</button>
 
-                <!-- DATOS RESTRINGIDOS -->
+                <!-- 2. CAMPOS RESTRINGIDOS (TODOS LOS DEMÁS) -->
                 <div id="restricted-section" class="hidden">
+                    <div class="section-title">Datos Personales y Contacto</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">👤</div>
+                        <div class="card-details">
+                            <div class="info-label">Apellidos</div>
+                            <div class="info-value" id="motero-lastname">---</div>
+                        </div>
+                    </div>
+
                     <div class="info-card">
                         <div class="card-icon">🪪</div>
                         <div class="card-details">
@@ -314,15 +303,15 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📞</div>
+                        <div class="card-icon">🚨</div>
                         <div class="card-details">
-                            <div class="info-label">Contacto Emergencia</div>
+                            <div class="info-label">Contacto de Emergencia</div>
                             <div class="info-value" id="motero-emergency-name">---</div>
                         </div>
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📱</div>
+                        <div class="card-icon">📞</div>
                         <div class="card-details">
                             <div class="info-label">Teléfono Emergencia</div>
                             <div class="info-value" id="motero-emergency-phone">---</div>
@@ -332,8 +321,124 @@
                     <div class="info-card">
                         <div class="card-icon">🏠</div>
                         <div class="card-details">
-                            <div class="info-label">Dirección</div>
+                            <div class="info-label">Dirección de Habitación</div>
                             <div class="info-value" id="motero-address">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">⚖️</div>
+                        <div class="card-details">
+                            <div class="info-label">Peso</div>
+                            <div class="info-value" id="motero-weight">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🎂</div>
+                        <div class="card-details">
+                            <div class="info-label">Edad</div>
+                            <div class="info-value" id="motero-age">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📅</div>
+                        <div class="card-details">
+                            <div class="info-label">Fecha de Nacimiento</div>
+                            <div class="info-value" id="motero-birthdate">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📱</div>
+                        <div class="card-details">
+                            <div class="info-label">Teléfono Propietario</div>
+                            <div class="info-value" id="motero-phone">---</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Documentos y Licencia</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📄</div>
+                        <div class="card-details">
+                            <div class="info-label">Número Registro INTT</div>
+                            <div class="info-value" id="motero-reg-intt">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🩺</div>
+                        <div class="card-details">
+                            <div class="info-label">Venc. Certificado Médico</div>
+                            <div class="info-value" id="motero-ven-cermedic">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-details">
+                            <div class="info-label">Vencimiento Seguro</div>
+                            <div class="info-value" id="motero-ven-seg">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🪪</div>
+                        <div class="card-details">
+                            <div class="info-label">Vencimiento Licencia</div>
+                            <div class="info-value" id="motero-ven-licen">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📋</div>
+                        <div class="card-details">
+                            <div class="info-label">Tipo de Licencia</div>
+                            <div class="info-value" id="motero-tipo-lic">---</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Detalles del Vehículo y Trabajo</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🔢</div>
+                        <div class="card-details">
+                            <div class="info-label">Serial Carrocería</div>
+                            <div class="info-value" id="motero-ser-carroc">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🗓️</div>
+                        <div class="card-details">
+                            <div class="info-label">Año del Vehículo</div>
+                            <div class="info-value" id="motero-veh-year">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🛵</div>
+                        <div class="card-details">
+                            <div class="info-label">Modelo del Vehículo</div>
+                            <div class="info-value" id="motero-mod-vehi">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🏷️</div>
+                        <div class="card-details">
+                            <div class="info-label">Marca del Vehículo</div>
+                            <div class="info-value" id="motero-marc-vehi">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">⚙️</div>
+                        <div class="card-details">
+                            <div class="info-label">Tipo de Vehículo</div>
+                            <div class="info-value" id="motero-tipo-vehi">---</div>
                         </div>
                     </div>
 
@@ -346,7 +451,7 @@
                     </div>
                 </div>
 
-                <!-- ACCIONES DE CONTACTO -->
+                <!-- ACCIONES -->
                 <a id="btn-call-contact" href="#" class="btn-call">📞 LLAMAR A CONTACTO</a>
                 <a id="link-support" href="#" target="_blank" class="btn-whatsapp">💬 SOPORTE WHATSAPP</a>
             </div>
@@ -412,23 +517,42 @@
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('emergency-card').classList.remove('hidden');
 
-            // Cargar datos en los elementos
-            const fullName = `${fields.ful_name || fields.full_name || ''} ${fields['full_name 2'] || fields.full_name_2 || ''}`.trim();
-            document.getElementById('motero-name').textContent = fullName || 'No registrado';
+            // 1. Campos Públicos
+            document.getElementById('motero-name').textContent = fields.ful_name || fields.full_name || 'No registrado';
             document.getElementById('motero-blood').textContent = fields.blood_type || '--';
             document.getElementById('motero-allergies').textContent = fields.allergies || 'Ninguna';
             document.getElementById('motero-conditions').textContent = fields.conditions || 'Ninguna';
             document.getElementById('motero-plate').textContent = fields.plate || 'S/I';
 
+            // 2. Campos Restringidos
+            document.getElementById('motero-lastname').textContent = fields['full_name 2'] || fields.full_name_2 || 'No registrado';
             document.getElementById('motero-dni').textContent = fields.dni || 'S/I';
+            
             const emergencyName = fields.emergency_contact_name || 'Familiar';
             const emergencyPhone = fields.emergency_contact_phone || '';
             document.getElementById('motero-emergency-name').textContent = emergencyName;
             document.getElementById('motero-emergency-phone').textContent = emergencyPhone || 'S/I';
-            document.getElementById('motero-address').textContent = fields.direccion || 'No registrada';
-            document.getElementById('motero-trab-en').textContent = fields.trab_en || fields['Trabaja en'] || '---';
 
-            // Configurar botones
+            document.getElementById('motero-address').textContent = fields.direccion || 'No registrada';
+            document.getElementById('motero-weight').textContent = fields.peso || '---';
+            document.getElementById('motero-age').textContent = fields.edad || '---';
+            document.getElementById('motero-birthdate').textContent = fields.fecha_nac || '---';
+            document.getElementById('motero-phone').textContent = fields.número_prop || fields.numero_prop || fields.num_telef || '---';
+
+            document.getElementById('motero-reg-intt').textContent = fields.reg_intt || '---';
+            document.getElementById('motero-ven-cermedic').textContent = fields.ven_cermedic || '---';
+            document.getElementById('motero-ven-seg').textContent = fields.ven_seg || '---';
+            document.getElementById('motero-ven-licen').textContent = fields.ven_licen || '---';
+            document.getElementById('motero-tipo-lic').textContent = fields.tipo_lic || '---';
+
+            document.getElementById('motero-ser-carroc').textContent = fields.ser_carroc || '---';
+            document.getElementById('motero-veh-year').textContent = fields['año_vehi'] || fields.ano_vehi || '---';
+            document.getElementById('motero-mod-vehi').textContent = fields.mod_vehi || '---';
+            document.getElementById('motero-marc-vehi').textContent = fields.marc_vehi || '---';
+            document.getElementById('motero-tipo-vehi').textContent = fields.tipo_vehi || '---';
+            document.getElementById('motero-trab-en').textContent = fields.trab_en || fields['Trabaja en'] || fields.trabaja_en || fields.trab_on || '---';
+
+            // Botón de llamada al contacto de emergencia
             const btnCall = document.getElementById('btn-call-contact');
             if (emergencyPhone) {
                 btnCall.href = `tel:${emergencyPhone}`;
@@ -437,6 +561,7 @@
                 btnCall.style.display = 'none';
             }
 
+            // Enlace Soporte WhatsApp
             const supportLink = document.getElementById('link-support');
             supportLink.href = `https://wa.me/${PHONE_SUPPORT}?text=Hola,%20necesito%20actualizar%20los%20datos%20del%20tag%20${tag}`;
         }
