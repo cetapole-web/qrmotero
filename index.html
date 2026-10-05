@@ -226,7 +226,7 @@ if (addressElem) {
 document.getElementById('motero-lastname').textContent = fields.full_name_2 || 'No registrado';
 document.getElementById('motero-weight').textContent = fields.peso || '---';
 document.getElementById('motero-age').textContent = fields.edad || '---';
-document.getElementById('motero-reg-intt').textContent = fields.rog_intt || '---';
+document.getElementById('motero-reg-intt').textContent = fields.reg_intt || fields.rog_intt || '---';
 document.getElementById('motero-veh-year').textContent = fields['año_vehi'] || fields.ano_vehi || '---';
 document.getElementById('motero-ser-carroc').textContent = fields.ser_carroc || '---';
 document.getElementById('motero-ven-licen').textContent = fields.ven_licen || '---';
@@ -235,10 +235,10 @@ document.getElementById('motero-birthdate').textContent = fields.fecha_nac || '-
 document.getElementById('motero-ven-cermedic').textContent = fields.ven_cermedic || '---';
 document.getElementById('motero-tipo-lic').textContent = fields.tipo_lic || '---';
 document.getElementById('motero-tipo-vehi').textContent = fields.tipo_vehi || '---';
-document.getElementById('motero-trab-en').textContent = fields.trab_on || '---';
+document.getElementById('motero-trab-en').textContent = fields.trab_en || fields.trab_on || '---';
 document.getElementById('motero-marc-vehi').textContent = fields.marc_vehi || '---';
 document.getElementById('motero-mod-vehi').textContent = fields.mod_vehi || '---';
-document.getElementById('motero-phone').textContent = fields.numero_pfe || fields.numero_pfe_ || fields['Numero de Telefono'] || '---'; 
+document.getElementById('motero-phone').textContent = fields.numero_pfe || fields.numero_pfe_ || fields.num_telef || fields['Numero de Telefono'] || '---';
             const contactName = fields.emergency_contact_name || 'Familiar';
             const btnCall = document.getElementById('btn-call-contact');
             
