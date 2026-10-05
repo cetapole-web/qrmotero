@@ -40,39 +40,130 @@
         <button class="btn-search" onclick="buscarManual()">CONSULTAR FICHA</button>
     </div>
 
-    <!-- FICHA MÉDICA DE EMERGENCIA -->
-    <div id="emergency-card" class="card hidden">
-        <span class="badge-danger">EMERGENCIA MÉDICA</span>
-        <h1 id="motero-name" style="font-size: 1.5rem;">---</h1>
-        <p id="motero-dni" style="color: #00C1B7; font-size: 0.9rem;">C.I. ---</p>
-        
-        <div class="blood-type" id="motero-blood">--</div>
+   <!-- FICHA MÉDICA DE EMERGENCIA -->
+<div id="emergency-card" class="card hidden">
+  <span class="badge-danger">EMERGENCIA MÉDICA</span>
+  <h1 id="motero-name" style="font-size: 1.5rem;">---</h1>
+  <p id="motero-dni" style="color: #00C187; font-size: 0.9rem;">C.I. ---</p>
 
-        <div class="info-group">
-        <div class="info-label">Apellidos</div>
-        <div class="info-value" id="motero-lastname">---</div>
-      </div>
+  <div class="blood-type" id="motero-blood">--</div>
 
-      <div class="info-group">
-        <div class="info-label">Alergias Conocidas</div>
-        <div class="info-value" id="motero-allergies">---</div>
-      </div>
+  <div class="info-group">
+    <div class="info-label">Apellidos</div>
+    <div class="info-value" id="motero-lastname">---</div>
+  </div>
 
-      <div class="info-group">
-        <div class="info-label">Condiciones / Enfermedades</div>
-        <div class="info-value" id="motero-conditions">---</div>
-      </div>
+  <div class="info-group">
+    <div class="info-label">Alergias Conocidas</div>
+    <div class="info-value" id="motero-allergies">---</div>
+  </div>
 
-      <div class="info-group">
-        <div class="info-label">Contacto de Emergencia</div>
-        <div class="info-value" id="motero-emergency-name">---</div>
-      </div>
+  <div class="info-group">
+    <div class="info-label">Condiciones / Enfermedades</div>
+    <div class="info-value" id="motero-conditions">---</div>
+  </div>
 
-      <div class="info-group">
-        <div class="info-label">Teléfono Emergencia</div>
-        <div class="info-value" id="motero-emergency-phone">---</div>
-      </div>
+  <div class="info-group">
+    <div class="info-label">Contacto de Emergencia</div>
+    <div class="info-value" id="motero-emergency-name">---</div>
+  </div>
 
+  <div class="info-group">
+    <div class="info-label">Teléfono Emergencia</div>
+    <div class="info-value" id="motero-emergency-phone">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Placa del Vehículo</div>
+    <div class="info-value" id="motero-plate">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Dirección de Habitación</div>
+    <div class="info-value" id="motero-address">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Peso</div>
+    <div class="info-value" id="motero-weight">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Edad</div>
+    <div class="info-value" id="motero-age">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Fecha de Nacimiento</div>
+    <div class="info-value" id="motero-birthdate">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Teléfono Propietario</div>
+    <div class="info-value" id="motero-phone">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Número Registro INTT</div>
+    <div class="info-value" id="motero-reg-intt">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Vencimiento Certificado Médico</div>
+    <div class="info-value" id="motero-ven-cermedic">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Vencimiento Seguro Vehículo</div>
+    <div class="info-value" id="motero-ven-seg">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Vencimiento Licencia</div>
+    <div class="info-value" id="motero-ven-licen">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Licencia de Conducir Tipo</div>
+    <div class="info-value" id="motero-tipo-lic">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Serial Carrocería</div>
+    <div class="info-value" id="motero-ser-carroc">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Año del Vehículo</div>
+    <div class="info-value" id="motero-veh-year">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Modelo del Vehículo</div>
+    <div class="info-value" id="motero-mod-vehi">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Marca del Vehículo</div>
+    <div class="info-value" id="motero-marc-vehi">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Vehículo Tipo</div>
+    <div class="info-value" id="motero-tipo-vehi">---</div>
+  </div>
+
+  <div class="info-group">
+    <div class="info-label">Trabaja en</div>
+    <div class="info-value" id="motero-trab-en">---</div>
+  </div>
+
+  <a id="btn-call-contact" href="#" class="btn-call">LLAMAR CONTACTO</a>
+
+  <div class="footer-link">
+    ¿Sus datos cambiaron? <a id="link-support" href="https://wa.me/584120000000?text=Hola,%20quiero%20actualizar">Soporte</a>
+  </div>
+</div> 
       <div class="info-group">
         <div class="info-label">Placa del Vehículo</div>
         <div class="info-value" id="motero-plate">---</div>
