@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIPEM - Ficha de Emergencia</title>
+    <!-- FontAwesome para íconos visuales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #f2f5f8;
-            --primary-color: #1abc9c;
-            --card-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-sub: #7f8c8d;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --success-color: #2ecc71;
+            --bg-color: #03080d;
+            --primary-color: #0d9488;
+            --card-bg: rgba(13, 27, 42, 0.65);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --success-color: #10b981;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         
         body { 
-            background-color: var(--primary-color); 
+            background: linear-gradient(135deg, #06141f 0%, #03080d 100%); 
             color: var(--text-main); 
             min-height: 100vh; 
             display: flex; 
@@ -29,12 +31,13 @@
         }
 
         .app-container {
-            background: var(--bg-color);
-            border-radius: 24px;
+            background: #020b14;
+            border-radius: 28px;
             width: 100%;
             max-width: 420px;
             min-height: 90vh;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 242, 254, 0.15);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -43,17 +46,18 @@
 
         /* HEADER */
         .app-header {
-            background: var(--primary-color);
+            background: linear-gradient(90deg, #0d9488, #059669);
             color: white;
-            padding: 20px;
+            padding: 18px 20px;
             text-align: center;
         }
 
         .app-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         /* BODY CONTENT */
@@ -63,79 +67,89 @@
         }
 
         .badge-danger { 
-            background: var(--danger-color); 
-            color: white; 
-            padding: 6px 14px; 
+            background: rgba(239, 68, 68, 0.15); 
+            color: #fca5a5; 
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            padding: 8px 18px; 
             border-radius: 20px; 
             font-weight: bold; 
             display: inline-block; 
-            margin-bottom: 12px; 
+            margin-bottom: 16px; 
             font-size: 0.8rem; 
+            letter-spacing: 1px;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
         }
 
         /* CARDS / LIST ITEMS */
         .info-card { 
             background: var(--card-bg); 
-            border-radius: 14px; 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.12);
+            border-radius: 16px; 
             padding: 12px 16px; 
             margin-bottom: 10px; 
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .card-icon {
-            width: 40px;
-            height: 40px;
-            background: #eef9f8;
-            color: var(--primary-color);
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            background: rgba(13, 148, 136, 0.15);
+            color: #2dd4bf;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
             flex-shrink: 0;
+            border: 1px solid rgba(45, 212, 191, 0.2);
         }
 
         .card-details { flex: 1; text-align: left; }
-        .info-label { font-size: 0.72rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; }
-        .info-value { font-size: 0.98rem; font-weight: 700; color: var(--text-main); margin-top: 2px; }
+        .info-label { font-size: 0.72rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; }
+        .info-value { font-size: 0.98rem; font-weight: 700; color: #ffffff; margin-top: 2px; }
 
         .blood-card {
-            background: #fdf2f2;
-            border: 1px solid #fecaca;
+            background: rgba(45, 15, 20, 0.75);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
         }
         .blood-card .card-icon {
             background: var(--danger-color);
             color: white;
             font-weight: 900;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            border: none;
         }
 
         .section-title {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 800;
-            color: var(--text-sub);
+            color: #38bdf8;
             text-transform: uppercase;
-            margin: 16px 0 8px 4px;
+            margin: 20px 0 10px 4px;
             text-align: left;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         /* BUTTONS */
         .btn-restricted { 
             width: 100%; 
-            background: var(--warning-color); 
+            background: linear-gradient(90deg, #d97706, #f59e0b); 
             color: white; 
             border: none; 
             padding: 14px; 
-            border-radius: 12px; 
+            border-radius: 14px; 
             font-weight: bold; 
             font-size: 0.95rem; 
             margin: 16px 0; 
             cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+            transition: transform 0.2s;
         }
 
         .btn-call { 
@@ -144,15 +158,15 @@
             justify-content: center;
             gap: 8px;
             width: 100%; 
-            background: var(--success-color); 
+            background: linear-gradient(90deg, #059669, #10b981); 
             color: white; 
             text-decoration: none; 
             padding: 14px; 
-            border-radius: 12px; 
+            border-radius: 14px; 
             font-weight: bold; 
             font-size: 1rem; 
             margin-top: 10px; 
-            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
         }
 
         .btn-whatsapp { 
@@ -165,42 +179,50 @@
             color: white; 
             text-decoration: none; 
             padding: 12px; 
-            border-radius: 12px; 
+            border-radius: 14px; 
             font-weight: bold; 
             font-size: 0.9rem; 
             margin-top: 8px; 
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
         }
 
         .btn-search { 
             width: 100%; 
-            background: var(--primary-color); 
+            background: linear-gradient(90deg, #0d9488, #059669); 
             color: white; 
             border: none; 
             padding: 14px; 
-            border-radius: 12px; 
+            border-radius: 14px; 
             font-weight: bold; 
             font-size: 1rem; 
-            margin-top: 10px; 
+            margin-top: 12px; 
             cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3);
         }
 
         input[type="text"] { 
             width: 100%; 
             padding: 14px; 
-            border-radius: 12px; 
-            border: 1px solid #cbd5e1; 
-            background: white; 
-            color: var(--text-main); 
+            border-radius: 14px; 
+            border: 1px solid rgba(0, 242, 254, 0.2); 
+            background: rgba(13, 27, 42, 0.8); 
+            color: white; 
             font-size: 1rem; 
             text-align: center; 
             margin-top: 10px; 
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #2dd4bf;
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
         }
 
         .hidden { display: none !important; }
         
         .loader { 
-            border: 4px solid #e2e8f0; 
-            border-top: 4px solid var(--primary-color); 
+            border: 4px solid rgba(255,255,255,0.08); 
+            border-top: 4px solid #2dd4bf; 
             border-radius: 50%; 
             width: 40px; 
             height: 40px; 
@@ -235,12 +257,12 @@
             <!-- FICHA MÉDICA -->
             <div id="emergency-card" class="hidden">
                 <div style="text-align: center;">
-                    <span class="badge-danger">EMERGENCIA MÉDICA</span>
+                    <span class="badge-danger"><i class="fa-solid fa-triangle-exclamation"></i> EMERGENCIA MÉDICA</span>
                 </div>
 
                 <!-- 1. CAMPOS PÚBLICOS SOLICITADOS -->
                 <div class="info-card">
-                    <div class="card-icon">👤</div>
+                    <div class="card-icon"><i class="fa-solid fa-user"></i></div>
                     <div class="card-details">
                         <div class="info-label">Nombre</div>
                         <div class="info-value" id="motero-name">---</div>
@@ -248,7 +270,7 @@
                 </div>
 
                 <div class="info-card">
-                    <div class="card-icon">👤</div>
+                    <div class="card-icon"><i class="fa-solid fa-user-tag"></i></div>
                     <div class="card-details">
                         <div class="info-label">Apellido</div>
                         <div class="info-value" id="motero-lastname">---</div>
@@ -258,13 +280,13 @@
                 <div class="info-card blood-card">
                     <div class="card-icon" id="motero-blood">--</div>
                     <div class="card-details">
-                        <div class="info-label" style="color: var(--danger-color);">Tipo de Sangre</div>
-                        <div class="info-value" style="color: var(--danger-color);">Factor RH</div>
+                        <div class="info-label" style="color: #fca5a5;">Tipo de Sangre</div>
+                        <div class="info-value" style="color: #fca5a5;">Factor RH</div>
                     </div>
                 </div>
 
                 <div class="info-card">
-                    <div class="card-icon">⚠️</div>
+                    <div class="card-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3);"><i class="fa-solid fa-triangle-exclamation"></i></div>
                     <div class="card-details">
                         <div class="info-label">Alergias Conocidas</div>
                         <div class="info-value" id="motero-allergies">---</div>
@@ -272,7 +294,7 @@
                 </div>
 
                 <div class="info-card">
-                    <div class="card-icon">🏥</div>
+                    <div class="card-icon" style="color: #60a5fa; background: rgba(96, 165, 250, 0.15); border-color: rgba(96, 165, 250, 0.3);"><i class="fa-solid fa-hospital"></i></div>
                     <div class="card-details">
                         <div class="info-label">Condiciones / Enfermedades</div>
                         <div class="info-value" id="motero-conditions">---</div>
@@ -280,7 +302,7 @@
                 </div>
 
                 <div class="info-card">
-                    <div class="card-icon">🏍️</div>
+                    <div class="card-icon" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.3);"><i class="fa-solid fa-motorcycle"></i></div>
                     <div class="card-details">
                         <div class="info-label">Placa del Vehículo</div>
                         <div class="info-value" id="motero-plate">---</div>
@@ -288,14 +310,14 @@
                 </div>
 
                 <!-- BOTÓN DE CÓDIGO RESTRINGIDO -->
-                <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()">🔒 CÓDIGO RESTRINGIDO</button>
+                <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()"><i class="fa-solid fa-lock"></i> CÓDIGO RESTRINGIDO</button>
 
                 <!-- 2. CAMPOS RESTRINGIDOS -->
                 <div id="restricted-section" class="hidden">
                     <div class="section-title">Datos Personales y Contacto</div>
 
                     <div class="info-card">
-                        <div class="card-icon">🪪</div>
+                        <div class="card-icon"><i class="fa-solid fa-id-card"></i></div>
                         <div class="card-details">
                             <div class="info-label">Cédula / DNI</div>
                             <div class="info-value" id="motero-dni">---</div>
@@ -303,7 +325,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🚨</div>
+                        <div class="card-icon"><i class="fa-solid fa-user-shield"></i></div>
                         <div class="card-details">
                             <div class="info-label">Contacto de Emergencia</div>
                             <div class="info-value" id="motero-emergency-name">---</div>
@@ -311,7 +333,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📞</div>
+                        <div class="card-icon"><i class="fa-solid fa-phone-volume"></i></div>
                         <div class="card-details">
                             <div class="info-label">Teléfono Emergencia</div>
                             <div class="info-value" id="motero-emergency-phone">---</div>
@@ -319,7 +341,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🏠</div>
+                        <div class="card-icon"><i class="fa-solid fa-house"></i></div>
                         <div class="card-details">
                             <div class="info-label">Dirección de Habitación</div>
                             <div class="info-value" id="motero-address">---</div>
@@ -327,7 +349,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">⚖️</div>
+                        <div class="card-icon"><i class="fa-solid fa-weight-scale"></i></div>
                         <div class="card-details">
                             <div class="info-label">Peso</div>
                             <div class="info-value" id="motero-weight">---</div>
@@ -335,7 +357,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🎂</div>
+                        <div class="card-icon"><i class="fa-solid fa-cake-candles"></i></div>
                         <div class="card-details">
                             <div class="info-label">Edad</div>
                             <div class="info-value" id="motero-age">---</div>
@@ -343,7 +365,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📅</div>
+                        <div class="card-icon"><i class="fa-solid fa-calendar"></i></div>
                         <div class="card-details">
                             <div class="info-label">Fecha de Nacimiento</div>
                             <div class="info-value" id="motero-birthdate">---</div>
@@ -351,7 +373,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📱</div>
+                        <div class="card-icon"><i class="fa-solid fa-mobile-screen"></i></div>
                         <div class="card-details">
                             <div class="info-label">Teléfono Propietario</div>
                             <div class="info-value" id="motero-phone">---</div>
@@ -361,7 +383,7 @@
                     <div class="section-title">Documentos y Licencia</div>
 
                     <div class="info-card">
-                        <div class="card-icon">📄</div>
+                        <div class="card-icon"><i class="fa-solid fa-file-lines"></i></div>
                         <div class="card-details">
                             <div class="info-label">Número Registro INTT</div>
                             <div class="info-value" id="motero-reg-intt">---</div>
@@ -369,7 +391,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🩺</div>
+                        <div class="card-icon"><i class="fa-solid fa-notes-medical"></i></div>
                         <div class="card-details">
                             <div class="info-label">Venc. Certificado Médico</div>
                             <div class="info-value" id="motero-ven-cermedic">---</div>
@@ -377,7 +399,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🛡️</div>
+                        <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
                         <div class="card-details">
                             <div class="info-label">Vencimiento Seguro</div>
                             <div class="info-value" id="motero-ven-seg">---</div>
@@ -385,7 +407,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🪪</div>
+                        <div class="card-icon"><i class="fa-solid fa-id-card-clip"></i></div>
                         <div class="card-details">
                             <div class="info-label">Vencimiento Licencia</div>
                             <div class="info-value" id="motero-ven-licen">---</div>
@@ -393,7 +415,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">📋</div>
+                        <div class="card-icon"><i class="fa-solid fa-clipboard-user"></i></div>
                         <div class="card-details">
                             <div class="info-label">Tipo de Licencia</div>
                             <div class="info-value" id="motero-tipo-lic">---</div>
@@ -403,7 +425,7 @@
                     <div class="section-title">Detalles del Vehículo y Trabajo</div>
 
                     <div class="info-card">
-                        <div class="card-icon">🔢</div>
+                        <div class="card-icon"><i class="fa-solid fa-car-rear"></i></div>
                         <div class="card-details">
                             <div class="info-label">Serial Carrocería</div>
                             <div class="info-value" id="motero-ser-carroc">---</div>
@@ -411,7 +433,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🗓️</div>
+                        <div class="card-icon"><i class="fa-solid fa-calendar-days"></i></div>
                         <div class="card-details">
                             <div class="info-label">Año del Vehículo</div>
                             <div class="info-value" id="motero-veh-year">---</div>
@@ -419,7 +441,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🛵</div>
+                        <div class="card-icon"><i class="fa-solid fa-motorcycle"></i></div>
                         <div class="card-details">
                             <div class="info-label">Modelo del Vehículo</div>
                             <div class="info-value" id="motero-mod-vehi">---</div>
@@ -427,7 +449,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">🏷️</div>
+                        <div class="card-icon"><i class="fa-solid fa-tags"></i></div>
                         <div class="card-details">
                             <div class="info-label">Marca del Vehículo</div>
                             <div class="info-value" id="motero-marc-vehi">---</div>
@@ -435,7 +457,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">⚙️</div>
+                        <div class="card-icon"><i class="fa-solid fa-gears"></i></div>
                         <div class="card-details">
                             <div class="info-label">Tipo de Vehículo</div>
                             <div class="info-value" id="motero-tipo-vehi">---</div>
@@ -443,7 +465,7 @@
                     </div>
 
                     <div class="info-card">
-                        <div class="card-icon">💼</div>
+                        <div class="card-icon"><i class="fa-solid fa-briefcase"></i></div>
                         <div class="card-details">
                             <div class="info-label">Trabaja en</div>
                             <div class="info-value" id="motero-trab-en">---</div>
