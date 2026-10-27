@@ -3,178 +3,618 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIPEM - Ficha de Emergencia Médica</title>
-    <!-- Tailwind CSS para un diseño responsivo y moderno -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para los íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SIPEM - Ficha de Emergencia</title>
     <style>
-        body {
-            background: linear-gradient(135deg, #06141f 0%, #03080d 100%);
-            color: #e2e8f0;
-            font-family: 'Inter', sans-serif;
+        :root {
+            --bg-color: #f2f5f8;
+            --primary-color: #1abc9c;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-sub: #7f8c8d;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --success-color: #2ecc71;
         }
-        .glass-card {
-            background: rgba(13, 27, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 242, 254, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        
+        body { 
+            background-color: var(--primary-color); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start;
+            padding: 10px; 
         }
-        .glass-card-red {
-            background: rgba(45, 15, 20, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 99, 99, 0.3);
+
+        .app-container {
+            background: var(--bg-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            min-height: 90vh;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
         }
-        .neon-glow-red {
-            box-shadow: 0 0 15px rgba(255, 75, 75, 0.4);
+
+        /* HEADER */
+        .app-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
         }
-        .neon-glow-cyan {
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+
+        .app-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .neon-glow-orange {
-            box-shadow: 0 0 15px rgba(255, 165, 0, 0.4);
+
+        /* BODY CONTENT */
+        .app-content {
+            padding: 16px;
+            flex: 1;
         }
+
+        .badge-danger { 
+            background: var(--danger-color); 
+            color: white; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            display: inline-block; 
+            margin-bottom: 12px; 
+            font-size: 0.8rem; 
+        }
+
+        /* CARDS / LIST ITEMS */
+        .info-card { 
+            background: var(--card-bg); 
+            border-radius: 14px; 
+            padding: 12px 16px; 
+            margin-bottom: 10px; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: #eef9f8;
+            color: var(--primary-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .card-details { flex: 1; text-align: left; }
+        .info-label { font-size: 0.72rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; }
+        .info-value { font-size: 0.98rem; font-weight: 700; color: var(--text-main); margin-top: 2px; }
+
+        .blood-card {
+            background: #fdf2f2;
+            border: 1px solid #fecaca;
+        }
+        .blood-card .card-icon {
+            background: var(--danger-color);
+            color: white;
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            margin: 16px 0 8px 4px;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }
+
+        /* BUTTONS */
+        .btn-restricted { 
+            width: 100%; 
+            background: var(--warning-color); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 0.95rem; 
+            margin: 16px 0; 
+            cursor: pointer; 
+            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-call { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%; 
+            background: var(--success-color); 
+            color: white; 
+            text-decoration: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            margin-top: 10px; 
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-whatsapp { 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%; 
+            background: #25D366; 
+            color: white; 
+            text-decoration: none; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 0.9rem; 
+            margin-top: 8px; 
+        }
+
+        .btn-search { 
+            width: 100%; 
+            background: var(--primary-color); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 12px; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            margin-top: 10px; 
+            cursor: pointer; 
+        }
+
+        input[type="text"] { 
+            width: 100%; 
+            padding: 14px; 
+            border-radius: 12px; 
+            border: 1px solid #cbd5e1; 
+            background: white; 
+            color: var(--text-main); 
+            font-size: 1rem; 
+            text-align: center; 
+            margin-top: 10px; 
+        }
+
+        .hidden { display: none !important; }
+        
+        .loader { 
+            border: 4px solid #e2e8f0; 
+            border-top: 4px solid var(--primary-color); 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            animation: spin 1s linear infinite; 
+            margin: 30px auto; 
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body>
 
-    <!-- Contenedor Estilo Smartphone -->
-    <div class="w-full max-w-md bg-[#020b14] rounded-[40px] border-[8px] border-[#0e2233] shadow-2xl overflow-hidden relative pb-8">
-        
-        <!-- Barra superior simulada -->
-        <div class="bg-[#040e18] px-6 py-3 flex justify-between items-center text-xs text-slate-400 border-b border-slate-800/60">
-            <span>4:22</span>
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-signal"></i>
-                <i class="fa-solid fa-wifi"></i>
-                <i class="fa-solid fa-battery-three-quarters text-emerald-400"></i>
-            </div>
+    <div class="app-container">
+        <!-- CABECERA -->
+        <div class="app-header">
+            <div class="app-title">SIPEM</div>
         </div>
 
-        <!-- Encabezado SIPEM -->
-        <div class="bg-gradient-to-r from-teal-600 to-emerald-600 py-3 px-6 text-center shadow-lg">
-            <h1 class="text-white font-black tracking-widest text-lg uppercase drop-shadow">SIPEM</h1>
+        <div class="app-content">
+            <!-- PANTALLA DE CARGA -->
+            <div id="loading">
+                <div class="loader"></div>
+                <p style="text-align: center; color: var(--text-sub);">Consultando Ficha...</p>
+            </div>
+
+            <!-- BUSCADOR MANUAL -->
+            <div id="search-container" class="hidden" style="text-align: center; padding-top: 20px;">
+                <p style="color: var(--text-sub); font-size: 0.9rem;">Ingrese el código único impreso en el casco</p>
+                <input type="text" id="manual-tag" placeholder="Ej: VE-1001" style="text-transform: uppercase;">
+                <button class="btn-search" onclick="buscarManual()">CONSULTAR FICHA</button>
+            </div>
+
+            <!-- FICHA MÉDICA -->
+            <div id="emergency-card" class="hidden">
+                <div style="text-align: center;">
+                    <span class="badge-danger">EMERGENCIA MÉDICA</span>
+                </div>
+
+                <!-- 1. CAMPOS PÚBLICOS SOLICITADOS -->
+                <div class="info-card">
+                    <div class="card-icon">👤</div>
+                    <div class="card-details">
+                        <div class="info-label">Nombre</div>
+                        <div class="info-value" id="motero-name">---</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">👤</div>
+                    <div class="card-details">
+                        <div class="info-label">Apellido</div>
+                        <div class="info-value" id="motero-lastname">---</div>
+                    </div>
+                </div>
+
+                <div class="info-card blood-card">
+                    <div class="card-icon" id="motero-blood">--</div>
+                    <div class="card-details">
+                        <div class="info-label" style="color: var(--danger-color);">Tipo de Sangre</div>
+                        <div class="info-value" style="color: var(--danger-color);">Factor RH</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">⚠️</div>
+                    <div class="card-details">
+                        <div class="info-label">Alergias Conocidas</div>
+                        <div class="info-value" id="motero-allergies">---</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">🏥</div>
+                    <div class="card-details">
+                        <div class="info-label">Condiciones / Enfermedades</div>
+                        <div class="info-value" id="motero-conditions">---</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-icon">🏍️</div>
+                    <div class="card-details">
+                        <div class="info-label">Placa del Vehículo</div>
+                        <div class="info-value" id="motero-plate">---</div>
+                    </div>
+                </div>
+
+                <!-- BOTÓN DE CÓDIGO RESTRINGIDO -->
+                <button id="btn-unlock" class="btn-restricted" onclick="desbloquearCampos()">🔒 CÓDIGO RESTRINGIDO</button>
+
+                <!-- 2. CAMPOS RESTRINGIDOS -->
+                <div id="restricted-section" class="hidden">
+                    <div class="section-title">Datos Personales y Contacto</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🪪</div>
+                        <div class="card-details">
+                            <div class="info-label">Cédula / DNI</div>
+                            <div class="info-value" id="motero-dni">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🚨</div>
+                        <div class="card-details">
+                            <div class="info-label">Contacto de Emergencia</div>
+                            <div class="info-value" id="motero-emergency-name">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📞</div>
+                        <div class="card-details">
+                            <div class="info-label">Teléfono Emergencia</div>
+                            <div class="info-value" id="motero-emergency-phone">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🏠</div>
+                        <div class="card-details">
+                            <div class="info-label">Dirección de Habitación</div>
+                            <div class="info-value" id="motero-address">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">⚖️</div>
+                        <div class="card-details">
+                            <div class="info-label">Peso</div>
+                            <div class="info-value" id="motero-weight">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🎂</div>
+                        <div class="card-details">
+                            <div class="info-label">Edad</div>
+                            <div class="info-value" id="motero-age">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📅</div>
+                        <div class="card-details">
+                            <div class="info-label">Fecha de Nacimiento</div>
+                            <div class="info-value" id="motero-birthdate">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📱</div>
+                        <div class="card-details">
+                            <div class="info-label">Teléfono Propietario</div>
+                            <div class="info-value" id="motero-phone">---</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Documentos y Licencia</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📄</div>
+                        <div class="card-details">
+                            <div class="info-label">Número Registro INTT</div>
+                            <div class="info-value" id="motero-reg-intt">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🩺</div>
+                        <div class="card-details">
+                            <div class="info-label">Venc. Certificado Médico</div>
+                            <div class="info-value" id="motero-ven-cermedic">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🛡️</div>
+                        <div class="card-details">
+                            <div class="info-label">Vencimiento Seguro</div>
+                            <div class="info-value" id="motero-ven-seg">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🪪</div>
+                        <div class="card-details">
+                            <div class="info-label">Vencimiento Licencia</div>
+                            <div class="info-value" id="motero-ven-licen">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">📋</div>
+                        <div class="card-details">
+                            <div class="info-label">Tipo de Licencia</div>
+                            <div class="info-value" id="motero-tipo-lic">---</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Detalles del Vehículo y Trabajo</div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🔢</div>
+                        <div class="card-details">
+                            <div class="info-label">Serial Carrocería</div>
+                            <div class="info-value" id="motero-ser-carroc">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🗓️</div>
+                        <div class="card-details">
+                            <div class="info-label">Año del Vehículo</div>
+                            <div class="info-value" id="motero-veh-year">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🛵</div>
+                        <div class="card-details">
+                            <div class="info-label">Modelo del Vehículo</div>
+                            <div class="info-value" id="motero-mod-vehi">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">🏷️</div>
+                        <div class="card-details">
+                            <div class="info-label">Marca del Vehículo</div>
+                            <div class="info-value" id="motero-marc-vehi">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">⚙️</div>
+                        <div class="card-details">
+                            <div class="info-label">Tipo de Vehículo</div>
+                            <div class="info-value" id="motero-tipo-vehi">---</div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-icon">💼</div>
+                        <div class="card-details">
+                            <div class="info-label">Trabaja en</div>
+                            <div class="info-value" id="motero-trab-en">---</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCIONES -->
+                <a id="btn-call-contact" href="#" class="btn-call">📞 LLAMAR A CONTACTO</a>
+                <a id="link-support" href="#" target="_blank" class="btn-whatsapp">💬 SOPORTE WHATSAPP</a>
+            </div>
         </div>
-
-        <!-- Cuerpo de la Interfaz -->
-        <div class="p-5 space-y-4">
-            
-            <!-- Alerta de Emergencia Médica -->
-            <div class="glass-card-red rounded-2xl p-3 flex items-center justify-center space-x-3 neon-glow-red">
-                <div class="relative flex items-center justify-center">
-                    <span class="absolute w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75"></span>
-                    <i class="fa-solid fa-triangle-exclamation text-red-400 text-xl relative z-10"></i>
-                </div>
-                <span class="text-red-200 font-bold tracking-wide uppercase text-sm">Emergencia Médica</span>
-            </div>
-
-            <!-- Perfil / Avatar Central -->
-            <div class="flex flex-col items-center justify-center pt-1 pb-2">
-                <div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-cyan-400 to-teal-500 neon-glow-cyan mb-2">
-                    <div class="w-full h-full bg-[#081826] rounded-full flex items-center justify-center overflow-hidden">
-                        <i class="fa-solid fa-user text-cyan-300 text-3xl"></i>
-                    </div>
-                </div>
-                <h2 class="text-white text-xl font-bold tracking-wide">Cesar Poleo</h2>
-            </div>
-
-            <!-- Grid de Datos Principales (Apellido y Tipo de Sangre) -->
-            <div class="grid grid-cols-2 gap-3">
-                <!-- Apellido -->
-                <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
-                    <div class="flex items-center space-x-2 text-cyan-400 text-xs font-semibold uppercase mb-1">
-                        <i class="fa-solid fa-user-tag"></i>
-                        <span>Apellido</span>
-                    </div>
-                    <span class="text-white font-medium text-base truncate">Poleo</span>
-                </div>
-
-                <!-- Tipo de Sangre -->
-                <div class="glass-card-red rounded-2xl p-3.5 flex flex-col justify-between">
-                    <div class="flex items-center space-x-2 text-red-400 text-xs font-semibold uppercase mb-1">
-                        <i class="fa-solid fa-droplet"></i>
-                        <span>Tipo de Sangre</span>
-                    </div>
-                    <span class="text-white font-bold text-lg">A+ <span class="text-xs font-normal text-red-300">Factor RH</span></span>
-                </div>
-            </div>
-
-            <!-- Grid de Alergias y Condiciones -->
-            <div class="grid grid-cols-2 gap-3">
-                <!-- Alergias -->
-                <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
-                    <div class="flex items-center space-x-2 text-amber-400 text-xs font-semibold uppercase mb-1">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <span>Alergias</span>
-                    </div>
-                    <span class="text-white font-medium text-base truncate">Mada</span>
-                </div>
-
-                <!-- Condiciones -->
-                <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
-                    <div class="flex items-center space-x-2 text-blue-400 text-xs font-semibold uppercase mb-1">
-                        <i class="fa-solid fa-hospital"></i>
-                        <span>Condiciones</span>
-                    </div>
-                    <span class="text-white font-medium text-base truncate">Kajaja</span>
-                </div>
-            </div>
-
-            <!-- Tarjeta de Vehículo con Estética de Auto -->
-            <div class="glass-card rounded-2xl p-4 space-y-2 relative overflow-hidden">
-                <div class="flex items-center justify-between text-cyan-400 text-xs font-semibold uppercase">
-                    <div class="flex items-center space-x-2">
-                        <i class="fa-solid fa-motorcycle text-cyan-400"></i>
-                        <span>Placa del Vehículo</span>
-                    </div>
-                    <span class="text-white font-mono bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-500/30 text-xs">Qtcnnsb123</span>
-                </div>
-                <!-- Línea decorativa visual simulando wireframe de vehículo -->
-                <div class="py-2 flex items-center justify-center opacity-60">
-                    <i class="fa-solid fa-car-side text-4xl text-cyan-300"></i>
-                </div>
-            </div>
-
-            <!-- Código Restringido (Botón Alerta / Candado) -->
-            <div class="bg-gradient-to-r from-amber-600 to-orange-500 rounded-2xl p-3.5 flex items-center justify-center space-x-3 neon-glow-orange cursor-pointer hover:opacity-95 transition">
-                <i class="fa-solid fa-lock text-white text-base"></i>
-                <span class="text-white font-bold tracking-wider text-sm uppercase">Código Restringido</span>
-            </div>
-
-            <!-- Botones de Contacto y Soporte -->
-            <div class="space-y-2.5 pt-1">
-                <!-- Llamar -->
-                <button onclick="alert('Llamando a Ceanlyn...')" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white font-bold py-3.5 px-4 rounded-2xl flex items-center justify-center space-x-2 shadow-lg transition">
-                    <i class="fa-solid fa-phone"></i>
-                    <span>LLAMAR A CEANLYN</span>
-                </button>
-
-                <!-- Soporte WhatsApp -->
-                <button onclick="alert('Abriendo Soporte WhatsApp...')" class="w-full bg-gradient-to-r from-emerald-700 to-teal-800 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 px-4 rounded-2xl flex items-center justify-center space-x-2 shadow-lg transition">
-                    <i class="fa-brands fa-whatsapp text-lg"></i>
-                    <span>SOPORTE WHATSAPP</span>
-                </button>
-            </div>
-
-        </div>
-
-        <!-- Barra de Navegación Inferior Estilo App Moderna -->
-        <div class="absolute bottom-0 left-0 right-0 bg-[#040e18]/90 backdrop-blur-md border-t border-slate-800 py-2.5 px-6 flex justify-around items-center text-xs text-slate-400">
-            <div class="flex flex-col items-center text-cyan-400 cursor-pointer">
-                <i class="fa-solid fa-wrench text-base mb-0.5"></i>
-                <span>Book Service</span>
-            </div>
-            <div class="flex flex-col items-center hover:text-white cursor-pointer">
-                <i class="fa-solid fa-triangle-exclamation text-base mb-0.5"></i>
-                <span>Report</span>
-            </div>
-            <div class="flex flex-col items-center hover:text-white cursor-pointer">
-                <i class="fa-solid fa-file-lines text-base mb-0.5"></i>
-                <span>Records</span>
-            </div>
-        </div>
-
     </div>
 
+    <script>
+        const AIRTABLE_PAT = 'patAKqaGwtvlsa22Q.0c45608d011d9019120cf6085b1321ea9c54372e3d0b6b5f6755ff7a87f823b3'; 
+        const AIRTABLE_BASE_ID = 'appzHgBdVzIsjLyGP'; 
+        const TALLY_FORM_URL = 'https://tally.so/r/44eqob';
+        const ACCESS_CODE = '282828';
+        const PHONE_SUPPORT = '584120000000';
+
+        // Helper seguro para asignar texto sin romper la app si no existe un id
+        function setTxt(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value || '---';
+        }
+
+        function ocultarCarga() {
+            const loading = document.getElementById('loading');
+            if (loading) loading.classList.add('hidden');
+        }
+
+        function mostrarBuscador() {
+            ocultarCarga();
+            const search = document.getElementById('search-container');
+            if (search) search.classList.remove('hidden');
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tagId = urlParams.get('tag');
+
+        if (tagId) {
+            consultarAirtable(tagId.trim().toUpperCase());
+        } else {
+            mostrarBuscador();
+        }
+
+        function buscarManual() {
+            const inputVal = document.getElementById('manual-tag').value.trim().toUpperCase();
+            if (inputVal) {
+                const search = document.getElementById('search-container');
+                const loading = document.getElementById('loading');
+                if (search) search.classList.add('hidden');
+                if (loading) loading.classList.remove('hidden');
+                consultarAirtable(inputVal);
+            }
+        }
+
+        async function consultarAirtable(tag) {
+            if (!tag) {
+                mostrarBuscador();
+                return;
+            }
+
+            const cleanTag = tag.split(']')[0].split('(')[0].split('http')[0].replace(/[^a-zA-Z0-9-]/g, '').trim().toUpperCase();
+            const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Moteros?filterByFormula=%7Btag_id%7D%3D'${encodeURIComponent(cleanTag)}'`;
+            
+            // Timeout de seguridad de 7 segundos para evitar carga infinita
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 7000);
+
+            try {
+                const response = await fetch(url, {
+                    headers: { Authorization: `Bearer ${AIRTABLE_PAT}` },
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`Error en API: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.records && data.records.length > 0) {
+                    const record = data.records[0].fields;
+                    if (record.is_active === true) {
+                        mostrarFicha(record, cleanTag);
+                    } else {
+                        window.location.href = `${TALLY_FORM_URL}?tag=${cleanTag}`;
+                    }
+                } else {
+                    window.location.href = `${TALLY_FORM_URL}?tag=${cleanTag}`;
+                }
+            } catch (error) {
+                console.error('Error al consultar Airtable:', error);
+                ocultarCarga();
+                alert('No se pudo conectar con la base de datos o el código es inválido. Verifique su conexión.');
+                mostrarBuscador();
+            }
+        }
+
+        function mostrarFicha(fields, tag) {
+            ocultarCarga();
+            const card = document.getElementById('emergency-card');
+            if (card) card.classList.remove('hidden');
+
+            // 1. CAMPOS PÚBLICOS (Incluye Apellido)
+            setTxt('motero-name', fields.ful_name || fields.full_name || 'No registrado');
+            setTxt('motero-lastname', fields['full_name 2'] || fields.full_name_2 || fields.lastname || fields.apellido || 'No registrado');
+            setTxt('motero-blood', fields.blood_type || '--');
+            setTxt('motero-allergies', fields.allergies || 'Ninguna');
+            setTxt('motero-conditions', fields.conditions || 'Ninguna');
+            setTxt('motero-plate', fields.plate || 'S/I');
+
+            // 2. CAMPOS RESTRINGIDOS
+            setTxt('motero-dni', fields.dni || 'S/I');
+            
+            const emergencyName = fields.emergency_contact_name || 'Familiar';
+            const emergencyPhone = fields.emergency_contact_phone || '';
+            setTxt('motero-emergency-name', emergencyName);
+            setTxt('motero-emergency-phone', emergencyPhone || 'S/I');
+
+            setTxt('motero-address', fields.direccion || 'No registrada');
+            setTxt('motero-weight', fields.peso || '---');
+            setTxt('motero-age', fields.edad || '---');
+            setTxt('motero-birthdate', fields.fecha_nac || '---');
+            setTxt('motero-phone', fields.número_prop || fields.numero_prop || fields.num_telef || '---');
+
+            setTxt('motero-reg-intt', fields.reg_intt || '---');
+            setTxt('motero-ven-cermedic', fields.ven_cermedic || '---');
+            setTxt('motero-ven-seg', fields.ven_seg || '---');
+            setTxt('motero-ven-licen', fields.ven_licen || '---');
+            setTxt('motero-tipo-lic', fields.tipo_lic || '---');
+
+            setTxt('motero-ser-carroc', fields.ser_carroc || '---');
+            setTxt('motero-veh-year', fields['año_vehi'] || fields.ano_vehi || '---');
+            setTxt('motero-mod-vehi', fields.mod_vehi || '---');
+            setTxt('motero-marc-vehi', fields.marc_vehi || '---');
+            setTxt('motero-tipo-vehi', fields.tipo_vehi || '---');
+            setTxt('motero-trab-en', fields.trab_en || fields['Trabaja en'] || fields.trabaja_en || fields.trab_on || '---');
+
+            // Botón Llamada
+            const btnCall = document.getElementById('btn-call-contact');
+            if (btnCall) {
+                if (emergencyPhone) {
+                    btnCall.href = `tel:${emergencyPhone}`;
+                    btnCall.textContent = `📞 LLAMAR A ${emergencyName.toUpperCase()}`;
+                } else {
+                    btnCall.style.display = 'none';
+                }
+            }
+
+            // Soporte WhatsApp
+            const supportLink = document.getElementById('link-support');
+            if (supportLink) {
+                supportLink.href = `https://wa.me/${PHONE_SUPPORT}?text=Hola,%20necesito%20actualizar%20los%20datos%20del%20tag%20${tag}`;
+            }
+        }
+
+        function desbloquearCampos() {
+            const inputCode = prompt("Ingrese el código de acceso autorizado:");
+            if (inputCode === ACCESS_CODE) {
+                const restrictedSec = document.getElementById('restricted-section');
+                const btnUnlock = document.getElementById('btn-unlock');
+                if (restrictedSec) restrictedSec.classList.remove('hidden');
+                if (btnUnlock) btnUnlock.classList.add('hidden');
+            } else if (inputCode !== null) {
+                alert("Código incorrecto. Acceso denegado.");
+            }
+        }
+    </script>
 </body>
 </html>
